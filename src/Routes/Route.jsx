@@ -4,6 +4,10 @@ import Home from "../pages/Home";
 import Products from "../pages/Products";
 import About from "../pages/About";
 import Dashboard from "../pages/Dashboard";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Product from "../pages/Product";
+import Profile from "../pages/Profile";
+import EditProfile from "../pages/EditProfile";
 
 const myCreatedRoute = createBrowserRouter([
     {
@@ -21,11 +25,30 @@ const myCreatedRoute = createBrowserRouter([
             {
                 path: '/products',
                 element: <Products/>,
-                loader: ()=>fetch('https://dummyjson.com/products')
+                loader: ()=>fetch(`https://dummyjson.com/products`)
+            }, {
+                path: '/products/:id',
+                element: <Product/>,
+                // loader: ({params})=>fetch(`https://dummyjson.com/products/${params.id}`)
+                // loader: (object)=>console.log(object.params.id)
             },
             {
                 path: '/dashboard',
-                element: <Dashboard/>
+                element: <DashboardLayout/>,
+                children: [
+                    {
+                        path: '/dashboard',
+                        element: <Dashboard/>
+                    },
+                    {
+                        path: '/dashboard/profile',
+                        element: <Profile/>
+                    },
+                    {
+                        path: '/dashboard/edit-profile',
+                        element: <EditProfile/>
+                    },
+                ]
             },
         ]
     }
